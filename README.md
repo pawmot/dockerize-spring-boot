@@ -1,4 +1,4 @@
-![Travis badge](https://travis-ci.org/pawmot/dockerize-spring-boot.svg?branch=master)
+![Travis badge](https://travis-ci.org/pawmot/dockerize-spring-boot.svg?branch=master) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
 # Dockerize Spring Boot
 ## Gradle plugin
 
@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
-        classpath 'gradle.plugin.com.pawmot:dockerize-spring-boot:0.1'
+        classpath 'gradle.plugin.com.pawmot:dockerize-spring-boot:$plugin_version'
     }
 }
 

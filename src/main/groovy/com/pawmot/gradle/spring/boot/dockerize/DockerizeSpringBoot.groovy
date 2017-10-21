@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class DockerizeSpringBoot implements Plugin<Project> {
+
     @Override
     void apply(Project project) {
         project.extensions.create("docker", DockerizeSpringBootExtension)
@@ -15,6 +16,10 @@ class DockerizeSpringBoot implements Plugin<Project> {
         task.doLast {
             if(!project.tasks.bootJar) {
                 throw new RuntimeException("spring boot plugin not detected")
+            }
+
+            if(!project.docker.imageName) {
+                throw new RuntimeException("imageName property has to be set")
             }
 
             def jarFilePath = project.tasks.bootJar.getArchivePath().absoluteFile
