@@ -28,3 +28,7 @@ docker {
 The `tag` property is optional - omitting will result in an image with tag `latest`
 
 _NB_: The above `build.gradle` file is not complete, only relevant parts shown.
+
+### Dockerfile
+
+The dockerfile to be used by the plugin should be located in `src/docker` folder and should refer to the built Spring Boot jar as `app.jar` (e.g. `ADD app.jar app.jar`).
