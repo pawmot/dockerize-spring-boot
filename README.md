@@ -1,3 +1,4 @@
+![Travis badge](https://travis-ci.org/pawmot/dockerize-spring-boot.svg?branch=master)
 # Dockerize Spring Boot
 ## Gradle plugin
 
