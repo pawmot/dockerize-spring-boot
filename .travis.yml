@@ -2,7 +2,7 @@ language: groovy
 
 deploy:
   provider: script
-  script: echo -e "gradle.publish.key=$APIKEY\ngradle.publish.secret=$APISECRET" >> $HOME/.gradle/gradle.properties && ./gradlew publishPlugins
+  script: ./gradlew publishPlugins -Pgradle.publish.key=$APIKEY -Pgradle.publish.secret=$APISECRET
   skip_cleanup: true
   on:
     tags: true
