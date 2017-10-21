@@ -27,7 +27,7 @@ docker {
 
 The `tag` property is optional - omitting will result in an image with tag `latest`
 
-_NB_: The above `build.gradle` file is not complete, only relevant parts shown.
+_NB_: The above `build.gradle` file is not complete, only relevant parts are shown.
 
 ### Dockerfile
 
