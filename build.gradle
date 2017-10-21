@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.9"
+    }
+}
+
+group 'com.pawmot'
+version '0.1'
+
+apply plugin: 'groovy'
+apply plugin: 'com.gradle.plugin-publish'
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.11'
+    compile gradleApi()
+    compile localGroovy()
+}
+
+pluginBundle {
+    website = 'https://github.com/pawmot/dockerize-spring-boot'
+    vcsUrl = 'https://github.com/pawmot/dockerize-spring-boot'
+    description = 'Dockerize Spring Boot Gradle Plugin'
+    tags = ["docker", "spring-boot"]
+
+
+    plugins {
+        propertyGradlePlugin {
+            id = 'com.pawmot.dockerize-spring-boot'
+            displayName = 'Dockerize Spring Boot Gradle Plugin'
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "4.2.1"
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
