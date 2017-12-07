@@ -2,6 +2,7 @@ package com.pawmot.gradle.spring.boot.dockerize
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 
 class DockerizeSpringBoot implements Plugin<Project> {
 
@@ -14,7 +15,9 @@ class DockerizeSpringBoot implements Plugin<Project> {
         task.dependsOn = [project.tasks.build]
 
         task.doLast {
-            if(!project.tasks.bootJar) {
+            def jarTask = findSpringBootVer1Or2JarTask(project)
+
+            if(!jarTask) {
                 throw new RuntimeException("spring boot plugin not detected")
             }
 
@@ -22,7 +25,7 @@ class DockerizeSpringBoot implements Plugin<Project> {
                 throw new RuntimeException("imageName property has to be set")
             }
 
-            def jarFilePath = project.tasks.bootJar.getArchivePath().absoluteFile
+            def jarFilePath = getJarPath(jarTask, project)
             def workingDirectory = new File(project.buildDir.toString(), 'docker')
 
             project.copy {
@@ -46,6 +49,18 @@ class DockerizeSpringBoot implements Plugin<Project> {
 
                 commandLine args
             }
+        }
+    }
+
+    private static Task findSpringBootVer1Or2JarTask(Project project) {
+        return project.tasks.findByName('bootJar') ?: project.tasks.findByName('bootRepackage')
+    }
+
+    private static Object getJarPath(Task t, Project project) {
+        if(t.metaClass.respondsTo(t, "getArchivePath")) {
+            return t.getAbsolutePath().absoluteFile
+        } else {
+            return project.tasks.findByName('jar').archivePath
         }
     }
 }
