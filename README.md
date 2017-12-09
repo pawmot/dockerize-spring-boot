@@ -2,7 +2,7 @@
 # Dockerize Spring Boot
 ## Gradle plugin
 
-To use this plugin apply it in the gradle project/module that uses Spring Boot:
+To use this plugin apply it in the gradle project/module that uses Spring Boot Gradle plugin (versions 1.x or 2.x):
 
 ```
 buildscript {
@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
-        classpath 'gradle.plugin.com.pawmot:dockerize-spring-boot:$plugin_version'
+        classpath "gradle.plugin.com.pawmot:dockerize-spring-boot:$plugin_version"
     }
 }
 
@@ -20,8 +20,8 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'com.pawmot.dockerize-spring-boot'
 
 docker {
-    imageName "pawmot/spring5-samples"
-    tag project.version
+    imageName 'some_image_name'
+    tag project.version // or a variable or literal
 }
 ```
 
