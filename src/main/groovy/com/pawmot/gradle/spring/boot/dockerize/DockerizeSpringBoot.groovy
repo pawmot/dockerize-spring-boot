@@ -58,7 +58,7 @@ class DockerizeSpringBoot implements Plugin<Project> {
 
     private static Object getJarPath(Task t, Project project) {
         if(t.metaClass.respondsTo(t, "getArchivePath")) {
-            return t.getAbsolutePath().absoluteFile
+            return t.getArchivePath().absoluteFile
         } else {
             return project.tasks.findByName('jar').archivePath
         }
