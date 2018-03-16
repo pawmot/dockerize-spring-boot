@@ -11,6 +11,7 @@ class DockerizeSpringBoot implements Plugin<Project> {
         project.extensions.create("docker", DockerizeSpringBootExtension)
 
         def task = project.task('dockerize')
+        task.group = 'build'
 
         task.dependsOn = [project.tasks.build]
 
