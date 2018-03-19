@@ -38,7 +38,7 @@ class DockerizeSpringBoot implements Plugin<Project> {
             }
 
             project.copy {
-                from new File(project.rootDir.toString(), 'src/docker/Dockerfile')
+                from new File(project.projectDir.toString(), 'src/docker/Dockerfile')
                 into workingDirectory
             }
 
