@@ -5,7 +5,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.gradle.publish:plugin-publish-plugin:0.9.10"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.9"
     }
 }
 
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.15'
+    compile 'org.codehaus.groovy:groovy-all:2.4.11'
     compile 'com.spotify:docker-client:8.11.7'
     compile 'javax.activation:activation:1.1'
     compile gradleApi()
@@ -44,7 +44,7 @@ pluginBundle {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "4.8.1"
+    gradleVersion = "4.2.1"
 }
 
 publishing {
