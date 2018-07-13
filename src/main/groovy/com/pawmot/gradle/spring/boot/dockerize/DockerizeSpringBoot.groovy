@@ -1,8 +1,14 @@
 package com.pawmot.gradle.spring.boot.dockerize
 
+import com.spotify.docker.client.DefaultDockerClient
+import com.spotify.docker.client.ProgressHandler
+import com.spotify.docker.client.exceptions.DockerException
+import com.spotify.docker.client.messages.ProgressMessage
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
+
+import java.util.concurrent.atomic.AtomicReference
 
 class DockerizeSpringBoot implements Plugin<Project> {
 
@@ -42,13 +48,32 @@ class DockerizeSpringBoot implements Plugin<Project> {
                 into workingDirectory
             }
 
-            project.exec {
-                workingDir workingDirectory
+            def fullImgName = "${project.docker.imageName}:${project.docker.tag}"
+            def docker = new DefaultDockerClient("unix:///var/run/docker.sock")
+            def imageIdRef = new AtomicReference<String>()
+            def errorRef = new AtomicReference<String>()
+            docker.build(workingDirectory.toPath(), fullImgName, new ProgressHandler() {
+                @Override
+                void progress(ProgressMessage message) throws DockerException {
+                    def imageId = message.buildImageId()
+                    if (imageId != null) {
+                        imageIdRef.set(imageId)
+                    }
 
-                def fullImgName = "${project.docker.imageName}:${project.docker.tag}"
-                def args = ['docker', 'build', '-t', fullImgName, workingDirectory]
+                    if (message.error() != null) {
+                        errorRef.set(message.error())
+                    }
+                }
+            })
 
-                commandLine args
+            while (imageIdRef.get() == null && errorRef.get() == null) {
+                sleep(100)
+            }
+
+            if (imageIdRef.get() != null) {
+                println("Created image $fullImgName with id ${imageIdRef.get()}.")
+            } else if (errorRef.get() != null) {
+                println("Image creation failed with following error: ${errorRef.get()}.")
             }
         }
     }
