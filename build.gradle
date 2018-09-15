@@ -11,7 +11,7 @@ buildscript {
 }
 
 group 'com.pawmot'
-version '0.3.5'
+version '0.3.6-SNAPSHOT'
 
 apply plugin: 'groovy'
 apply plugin: 'com.gradle.plugin-publish'
