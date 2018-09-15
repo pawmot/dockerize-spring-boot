@@ -4,13 +4,14 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
     }
+
     dependencies {
-        classpath "com.gradle.publish:plugin-publish-plugin:0.9.9"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.10.0"
     }
 }
 
 group 'com.pawmot'
-version '0.3.4'
+version '0.3.5'
 
 apply plugin: 'groovy'
 apply plugin: 'com.gradle.plugin-publish'
@@ -22,8 +23,11 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.11'
-    compile 'com.spotify:docker-client:8.11.7'
+    compile 'com.spotify:docker-client:8.13.0'
     compile 'javax.activation:activation:1.1'
+    runtimeOnly 'org.glassfish.hk2:hk2-api:2.4.0'
+    runtimeOnly 'org.glassfish.jersey.inject:jersey-hk2:2.27'
+    runtimeOnly 'org.glassfish.jersey.bundles.repackaged:jersey-guava:2.25.1'
     compile gradleApi()
     compile localGroovy()
 }
@@ -44,7 +48,7 @@ pluginBundle {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "4.2.1"
+    gradleVersion = "4.10.1"
 }
 
 publishing {

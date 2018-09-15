@@ -55,6 +55,10 @@ class DockerizeSpringBoot implements Plugin<Project> {
             docker.build(workingDirectory.toPath(), fullImgName, new ProgressHandler() {
                 @Override
                 void progress(ProgressMessage message) throws DockerException {
+                    if (message.error()) {
+                       println(message.error())
+                    }
+
                     def imageId = message.buildImageId()
                     if (imageId != null) {
                         imageIdRef.set(imageId)
